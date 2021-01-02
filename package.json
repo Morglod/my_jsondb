@@ -1,0 +1,21 @@
+{
+  "name": "my_jsondb",
+  "version": "0.0.1",
+  "description": "straightforward json db implementation",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "author": "morglod",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/lodash.throttle": "^4.1.6",
+    "@types/node": "^14.14.19",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  },
+  "dependencies": {
+    "lodash.throttle": "^4.1.1"
+  }
+}

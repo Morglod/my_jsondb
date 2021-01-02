@@ -1,0 +1,7 @@
+package-lock.json
+src
+node_modules
+.gitignore
+tsconfig.json
+lib/example.*
+./example_*
