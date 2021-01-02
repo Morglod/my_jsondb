@@ -3,5 +3,5 @@ src
 node_modules
 .gitignore
 tsconfig.json
-lib/example.*
+lib/example_*
 ./example_*

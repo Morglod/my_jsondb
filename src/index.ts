@@ -1,6 +1,10 @@
-import * as FS from 'fs/promises';
+import { readFile, writeFile } from 'fs/promises';
 import { watchFile, unwatchFile, Stats, existsSync } from 'fs';
 import throttle from 'lodash.throttle';
+
+type DeepReadonly<T> = {
+    readonly [P in keyof T]: DeepReadonly<T[P]>;
+};
 
 export class JsonDB<T> {
     filePath: string;
@@ -50,14 +54,14 @@ export class JsonDB<T> {
     };
 
     _read = async () => {
-        const str = await FS.readFile(this.filePath, 'utf8');
+        const str = await readFile(this.filePath, 'utf8');
         this._data = JSON.parse(str);
         for (const ar of this.afterRead) ar(this._data);
     };
 
     _forceWrite = async () => {
         const str = JSON.stringify(this._data, null, 2);
-        await FS.writeFile(this.filePath, str, 'utf8');
+        await writeFile(this.filePath, str, 'utf8');
     };
 
     _handleFileChange = async (currS: Stats, prevS: Stats) => {
@@ -75,5 +79,9 @@ export class JsonDB<T> {
                 resolve(updater(current));
             }, skipWrite);
         });
+    };
+
+    query = <J>(reader: (current: DeepReadonly<T>) => J) => {
+        return this.commitWait(reader, 'read');
     };
 }

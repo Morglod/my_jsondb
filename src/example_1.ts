@@ -1,8 +1,7 @@
 import { JsonDB } from ".";
 
 (async () => {
-    type CounterData = { counter: number };
-    const counterDB = new JsonDB<CounterData>(
+    const counterDB = new JsonDB(
         'example_counter.json',
         () => ({ counter: 0 })
     );
