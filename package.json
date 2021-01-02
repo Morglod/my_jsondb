@@ -1,12 +1,12 @@
 {
   "name": "@morglod/jsondb",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "straightforward json db implementation",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "pub": "npm publish --access=public"
+    "pub": "npm run build && npm publish --access=public"
   },
   "author": "morglod",
   "license": "MIT",
