@@ -69,11 +69,10 @@ export class JsonDB<T> {
         if (!skipWrite) this._forceWrite();
     };
 
-    commitWait = (updater: (current: T) => void, skipWrite?: any) => {
-        return new Promise<void>(resolve => {
+    commitWait = <J>(updater: (current: T) => J, skipWrite?: any) => {
+        return new Promise<J>(resolve => {
             this.commit((current) => {
-                updater(current);
-                resolve();
+                resolve(updater(current));
             }, skipWrite);
         });
     };
