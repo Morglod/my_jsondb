@@ -3,5 +3,6 @@ src
 node_modules
 .gitignore
 tsconfig.json
-lib/example_*
-./example_*
+example*.json
+lib/example*
+readme.md
