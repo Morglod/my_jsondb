@@ -17,14 +17,17 @@ export class JsonDB<T> {
     _initialData?: () => T;
     _beforeExitForceWrite = true;
 
+    _commitThrottle = 1000;
+    _writeThrottle = 1000;
+
     constructor(filePath: string, initialData?: () => T) {
         this.filePath = filePath;
         this._initialData = initialData;
     }
 
     init = async () => {
-        this.commit = throttle(this._commit, 50);
-        this.write = throttle(this._forceWrite, 100);
+        this.commit = throttle(this._commit, this._commitThrottle);
+        this.write = throttle(this._forceWrite, this._writeThrottle);
 
         if (!existsSync(this.filePath) && this._initialData) {
             this._data = this._initialData();
@@ -55,6 +58,7 @@ export class JsonDB<T> {
 
     _read = async () => {
         const str = await readFile(this.filePath, 'utf8');
+        if (!str) return;
         this._data = JSON.parse(str);
         for (const ar of this.afterRead) ar(this._data);
     };
